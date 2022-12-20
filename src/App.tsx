@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useExampleContext } from "./ExampleContext";
 import './App.css';
 import { useZustandStore } from "./ExampleZustand";
@@ -43,7 +43,7 @@ export const Container = () => {
 }
 
 let innerOneRenderedTimes = 0;
-export const InnerOne = () => {
+export const InnerOne = memo(() => {
     innerOneRenderedTimes++
 
     const { innerOneData, setInnerOneData } = useExampleContext();
@@ -65,10 +65,10 @@ export const InnerOne = () => {
           <span>Inner one rendered: {innerOneRenderedTimes}{`: ${data}`}</span>
       </div>
     )
-}
+}, function propAreEqual(prevProps, nextProps) { return true })
 
 let innerTwoRenderedTimes = 0;
-export const InnerTwo = () => {
+export const InnerTwo = memo(() => {
     innerTwoRenderedTimes++
 
     const { innerTwoData, setInnerTwoData } = useExampleContext();
@@ -90,4 +90,4 @@ export const InnerTwo = () => {
           <span>Inner two rendered: {innerTwoRenderedTimes}{`: ${data}`}</span>
       </div>
     )
-}
+}, function propAreEqual(prevProps, nextProps) { return true })
