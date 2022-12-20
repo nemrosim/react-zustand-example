@@ -1,4 +1,5 @@
 .Common {
+  user-select: none;
   display: inline-block;
   text-align: center;
   padding: 5px;
