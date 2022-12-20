@@ -6,28 +6,18 @@ export const App: React.FC = () => {
     appRenderedTimes++;
 
     return (
-      <div className="App">
+      <div className="App Common">
           <span>App rendered: {appRenderedTimes}</span>
           <Container/>
       </div>
     );
 }
 
-const commonStyles = {
-    padding: '5px',
-    margin: '5px',
-    borderRadius: '5px',
-    boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
-}
-
 let containerRenderedTimes = 0;
 export const Container = () => {
     containerRenderedTimes++
     return (
-      <div style={{
-          ...commonStyles,
-          backgroundColor: '#d17676',
-      }}>
+      <div className='Container Common'>
           <span>Container rendered: {containerRenderedTimes}</span>
           <InnerOne/>
           <InnerTwo/>
@@ -40,10 +30,7 @@ export const InnerOne = () => {
     innerOneRenderedTimes++
 
     return (
-      <div style={{
-          ...commonStyles,
-          backgroundColor: '#99d176'
-      }}>
+      <div className='InnerOne Common'>
           <span>Inner one rendered: {innerOneRenderedTimes}</span>
       </div>
     )
@@ -54,10 +41,7 @@ export const InnerTwo = () => {
     innerTwoRenderedTimes++
 
     return (
-      <div style={{
-          ...commonStyles,
-          backgroundColor: '#d1b976',
-      }}>
+      <div className='InnerTwo Common'>
           <span>Inner two rendered: {innerTwoRenderedTimes}</span>
       </div>
     )
