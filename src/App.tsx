@@ -1,6 +1,8 @@
 import React from 'react';
 import { useExampleContext } from "./ExampleContext";
 import './App.css';
+import { useZustandStore } from "./ExampleZustand";
+import shallow from "zustand/shallow";
 
 let appRenderedTimes = 0;
 export const App: React.FC = () => {
@@ -19,16 +21,21 @@ export const Container = () => {
     containerRenderedTimes++
 
     const { containerData, setContainerData } = useExampleContext();
+    const { set, data } = useZustandStore((state) => ({
+          set: state.setContainerData,
+          data: state.containerData,
+      }),
+      shallow);
 
     const handleOnClick = () => {
-        setContainerData((prevState) => !prevState)
+        set(!data)
     }
 
     return (
       <div className='Container Common'
            onClick={handleOnClick}
       >
-          <span>Container rendered: {containerRenderedTimes}{`: ${containerData}`}</span>
+          <span>Container rendered: {containerRenderedTimes}{`: ${data}`}</span>
           <InnerOne/>
           <InnerTwo/>
       </div>
@@ -40,17 +47,22 @@ export const InnerOne = () => {
     innerOneRenderedTimes++
 
     const { innerOneData, setInnerOneData } = useExampleContext();
+    const { set, data } = useZustandStore((state) => ({
+          set: state.setInnerOneData,
+          data: state.innerOneData,
+      }),
+      shallow);
 
     const handleOnClick = (event:  React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();
-        setInnerOneData((prevState) => !prevState)
+        set(!data)
     }
 
     return (
       <div className='InnerOne Common'
            onClick={handleOnClick}
       >
-          <span>Inner one rendered: {innerOneRenderedTimes}{`: ${innerOneData}`}</span>
+          <span>Inner one rendered: {innerOneRenderedTimes}{`: ${data}`}</span>
       </div>
     )
 }
@@ -60,17 +72,22 @@ export const InnerTwo = () => {
     innerTwoRenderedTimes++
 
     const { innerTwoData, setInnerTwoData } = useExampleContext();
+    const { set, data } = useZustandStore((state) => ({
+          set: state.setInnerTwoData,
+          data: state.innerTwoData,
+      }),
+      shallow);
 
     const handleOnClick = (event:  React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();
-        setInnerTwoData((prevState) => !prevState)
+        set(!data)
     }
 
     return (
       <div className='InnerTwo Common'
            onClick={handleOnClick}
       >
-          <span>Inner two rendered: {innerTwoRenderedTimes}{`: ${innerTwoData}`}</span>
+          <span>Inner two rendered: {innerTwoRenderedTimes}{`: ${data}`}</span>
       </div>
     )
 }
