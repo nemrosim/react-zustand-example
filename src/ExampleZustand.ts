@@ -1,4 +1,5 @@
 import create from 'zustand';
+import shallow from "zustand/shallow";
 
 interface ZustandStoreProps {
     containerData: boolean,
@@ -19,3 +20,21 @@ export const useZustandStore = create<ZustandStoreProps, any>(
       setInnerTwoData: (args) => set({ innerTwoData: args }),
   }),
 );
+
+export const useInnerOneZustandStore = () => useZustandStore((state) => ({
+      set: state.setInnerOneData,
+      data: state.innerOneData,
+  }),
+  shallow);
+
+export const useInnerTwoZustandStore = () => useZustandStore((state) => ({
+      set: state.setInnerTwoData,
+      data: state.innerTwoData,
+  }),
+  shallow);
+
+export const useContainerZustandStore = () => useZustandStore((state) => ({
+      set: state.setContainerData,
+      data: state.containerData,
+  }),
+  shallow);

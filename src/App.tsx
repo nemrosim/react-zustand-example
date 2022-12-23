@@ -1,8 +1,12 @@
 import React, { memo } from 'react';
-import { useExampleContext } from "./ExampleContext";
+import {
+    useContainerZustandStore,
+    useInnerOneZustandStore,
+    useInnerTwoZustandStore,
+} from "./ExampleZustand";
+import _ from 'lodash';
+
 import './App.css';
-import { useZustandStore } from "./ExampleZustand";
-import shallow from "zustand/shallow";
 
 let appRenderedTimes = 0;
 export const App: React.FC = () => {
@@ -20,12 +24,8 @@ let containerRenderedTimes = 0;
 export const Container = () => {
     containerRenderedTimes++
 
-    const { containerData, setContainerData } = useExampleContext();
-    const { set, data } = useZustandStore((state) => ({
-          set: state.setContainerData,
-          data: state.containerData,
-      }),
-      shallow);
+    // const { containerData, setContainerData } = useExampleContext();
+    const { set, data } = useContainerZustandStore();
 
     const handleOnClick = () => {
         set(!data)
@@ -46,12 +46,7 @@ let innerOneRenderedTimes = 0;
 export const InnerOne = memo(() => {
     innerOneRenderedTimes++
 
-    const { innerOneData, setInnerOneData } = useExampleContext();
-    const { set, data } = useZustandStore((state) => ({
-          set: state.setInnerOneData,
-          data: state.innerOneData,
-      }),
-      shallow);
+    const { set, data } = useInnerOneZustandStore();
 
     const handleOnClick = (event:  React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();
@@ -65,18 +60,15 @@ export const InnerOne = memo(() => {
           <span>Inner one rendered: {innerOneRenderedTimes}{`: ${data}`}</span>
       </div>
     )
+    // if component always have no props
 }, function propAreEqual(prevProps, nextProps) { return true })
 
 let innerTwoRenderedTimes = 0;
 export const InnerTwo = memo(() => {
     innerTwoRenderedTimes++
 
-    const { innerTwoData, setInnerTwoData } = useExampleContext();
-    const { set, data } = useZustandStore((state) => ({
-          set: state.setInnerTwoData,
-          data: state.innerTwoData,
-      }),
-      shallow);
+    // const { innerTwoData, setInnerTwoData } = useExampleContext();
+    const { set, data } = useInnerTwoZustandStore();
 
     const handleOnClick = (event:  React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();
@@ -90,4 +82,5 @@ export const InnerTwo = memo(() => {
           <span>Inner two rendered: {innerTwoRenderedTimes}{`: ${data}`}</span>
       </div>
     )
-}, function propAreEqual(prevProps, nextProps) { return true })
+    // for deep equal of any type of props
+}, function propAreEqual(prevProps, nextProps) { return _.isEqual(prevProps, nextProps) })
