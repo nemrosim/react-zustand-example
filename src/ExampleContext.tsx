@@ -2,12 +2,12 @@ import React, { useContext, useState } from 'react';
 import { Dispatch, SetStateAction } from 'react';
 
 interface ExampleContextProps {
-    containerData: boolean,
-    setContainerData: Dispatch<SetStateAction<boolean>>,
-    innerOneData: boolean,
-    setInnerOneData: Dispatch<SetStateAction<boolean>>,
-    innerTwoData: boolean,
-    setInnerTwoData: Dispatch<SetStateAction<boolean>>,
+    containerData: boolean;
+    setContainerData: Dispatch<SetStateAction<boolean>>;
+    innerOneData: boolean;
+    setInnerOneData: Dispatch<SetStateAction<boolean>>;
+    innerTwoData: boolean;
+    setInnerTwoData: Dispatch<SetStateAction<boolean>>;
 }
 
 const InitialState: ExampleContextProps = {
@@ -22,23 +22,23 @@ const InitialState: ExampleContextProps = {
 const ExampleContext = React.createContext<ExampleContextProps>(InitialState);
 
 export const ExampleContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [ containerData, setContainerData ] = useState(false);
-    const [ innerOneData, setInnerOneData ] = useState(false);
-    const [ innerTwoData, setInnerTwoData ] = useState(false);
+    const [containerData, setContainerData] = useState(false);
+    const [innerOneData, setInnerOneData] = useState(false);
+    const [innerTwoData, setInnerTwoData] = useState(false);
 
     return (
-      <ExampleContext.Provider
-        value={{
-            containerData,
-            setContainerData,
-            innerOneData,
-            setInnerOneData,
-            innerTwoData,
-            setInnerTwoData,
-        }}
-      >
-          {children}
-      </ExampleContext.Provider>
+        <ExampleContext.Provider
+            value={{
+                containerData,
+                setContainerData,
+                innerOneData,
+                setInnerOneData,
+                innerTwoData,
+                setInnerTwoData,
+            }}
+        >
+            {children}
+        </ExampleContext.Provider>
     );
 };
 
@@ -51,4 +51,3 @@ export const useExampleContext = (): ExampleContextProps => {
 
     return context;
 };
-
