@@ -32,14 +32,24 @@ export const Container = () => {
     };
 
     return (
-        <button className="Container Common" onClick={handleOnClick}>
+        <div
+            role="button"
+            className="Container Common"
+            onClick={handleOnClick}
+            onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    handleOnClick();
+                }
+            }}
+            tabIndex={0}
+        >
             <span>
                 Container rendered: {containerRenderedTimes}
                 {`: ${data}`}
             </span>
             <MemoizedInnerOne />
             <MemoizedInnerTwo />
-        </button>
+        </div>
     );
 };
 
@@ -51,15 +61,19 @@ export const InnerOne = () => {
 
     const handleOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation();
+
+        console.log('event', event.currentTarget);
         set(!data);
     };
 
     return (
-        <button className="InnerOne Common" onClick={handleOnClick}>
-            <span>
-                Inner one rendered: {innerOneRenderedTimes}
-                {`: ${data}`}
-            </span>
+        <button
+            className="InnerOne Common"
+            onClick={handleOnClick}
+            onKeyDown={(e) => e.stopPropagation()}
+        >
+            Inner one rendered: {innerOneRenderedTimes}
+            {`: ${data}`}
         </button>
     );
 };
@@ -82,7 +96,11 @@ export const InnerTwo = () => {
     };
 
     return (
-        <button className="InnerTwo Common" onClick={handleOnClick}>
+        <button
+            className="InnerTwo Common"
+            onClick={handleOnClick}
+            onKeyDown={(e) => e.stopPropagation()}
+        >
             Inner two rendered: {innerTwoRenderedTimes}
             {`: ${data}`}
         </button>
