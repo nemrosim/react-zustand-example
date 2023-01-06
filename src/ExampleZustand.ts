@@ -1,5 +1,6 @@
 import create from 'zustand';
 import shallow from 'zustand/shallow';
+import { devtools, persist } from 'zustand/middleware';
 
 interface ZustandStoreProps {
     containerData: boolean;
@@ -10,14 +11,25 @@ interface ZustandStoreProps {
     setInnerTwoData: (value: boolean) => void;
 }
 
-export const useZustandStore = create<ZustandStoreProps, any>((set) => ({
-    containerData: false,
-    setContainerData: (args) => set({ containerData: args }),
-    innerOneData: false,
-    setInnerOneData: (args) => set({ innerOneData: args }),
-    innerTwoData: false,
-    setInnerTwoData: (args) => set({ innerTwoData: args }),
-}));
+export const useZustandStore = create<
+    ZustandStoreProps,
+    [['zustand/devtools', never], ['zustand/persist', never]]
+>(
+    devtools(
+        persist((set) => ({
+            containerData: false,
+            setContainerData: (args) =>
+                set({ containerData: args }, false, { type: 'setContainerData', value: args }),
+            innerOneData: false,
+            setInnerOneData: (args) =>
+                set({ innerOneData: args }, false, { type: 'setInnerOneData', value: args }),
+            innerTwoData: false,
+            setInnerTwoData: (args) =>
+                set({ innerTwoData: args }, false, { type: 'setInnerTwoData', value: args }),
+        })),
+        { name: 'useZustandStore', trace: true },
+    ),
+);
 
 export const useInnerOneZustandStore = () =>
     useZustandStore(
@@ -33,15 +45,6 @@ export const useInnerTwoZustandStore = () =>
         (state) => ({
             set: state.setInnerTwoData,
             data: state.innerTwoData,
-        }),
-        shallow,
-    );
-
-export const useContainerZustandStore = () =>
-    useZustandStore(
-        (state) => ({
-            set: state.setContainerData,
-            data: state.containerData,
         }),
         shallow,
     );

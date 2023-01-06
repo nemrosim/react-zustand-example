@@ -1,11 +1,11 @@
 import React, { memo } from 'react';
 import {
-    useContainerZustandStore,
     useInnerOneZustandStore,
     useInnerTwoZustandStore,
+    useZustandStore,
 } from './ExampleZustand';
 import _ from 'lodash';
-
+import shallow from 'zustand/shallow';
 import './App.css';
 
 let appRenderedTimes = 0;
@@ -24,11 +24,12 @@ let containerRenderedTimes = 0;
 export const Container = () => {
     containerRenderedTimes++;
 
-    // const { containerData, setContainerData } = useExampleContext();
-    const { set, data } = useContainerZustandStore();
+    // This will trigger component re-render on "containerData" update only
+    const containerData = useZustandStore((state) => state.containerData, shallow);
 
     const handleOnClick = () => {
-        set(!data);
+        // You can get access the store by "getState" function
+        useZustandStore.getState().setContainerData(!containerData);
     };
 
     return (
@@ -45,7 +46,7 @@ export const Container = () => {
         >
             <span>
                 Container rendered: {containerRenderedTimes}
-                {`: ${data}`}
+                {`: ${containerData}`}
             </span>
             <MemoizedInnerOne />
             <MemoizedInnerTwo />
