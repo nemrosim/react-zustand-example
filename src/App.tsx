@@ -61,8 +61,6 @@ export const InnerOne = () => {
 
     const handleOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation();
-
-        console.log('event', event.currentTarget);
         set(!data);
     };
 
@@ -87,7 +85,6 @@ let innerTwoRenderedTimes = 0;
 export const InnerTwo = () => {
     innerTwoRenderedTimes++;
 
-    // const { innerTwoData, setInnerTwoData } = useExampleContext();
     const { set, data } = useInnerTwoZustandStore();
 
     const handleOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
