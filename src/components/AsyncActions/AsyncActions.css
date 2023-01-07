@@ -1,0 +1,15 @@
+.AsyncContainer {
+    background-color: white;
+}
+
+.AsyncContainer:hover {
+    background-color: #b3e4eb;
+}
+
+.UserContainer {
+    background-color: #d9bcb0;
+}
+
+.UserContainer:hover {
+    background-color: #e3a28b;
+}

@@ -6,6 +6,8 @@ import {
 } from './ExampleZustand';
 import _ from 'lodash';
 import shallow from 'zustand/shallow';
+import { MemoizedAsyncActions } from '../AsyncActions';
+
 import './App.css';
 
 let appRenderedTimes = 0;
@@ -36,6 +38,7 @@ export const Container = () => {
         <div
             role="button"
             className="Container Common"
+            style={{}}
             onClick={handleOnClick}
             onKeyDown={(event) => {
                 if (event.key === 'Enter' || event.key === ' ') {
@@ -50,6 +53,7 @@ export const Container = () => {
             </span>
             <MemoizedInnerOne />
             <MemoizedInnerTwo />
+            <MemoizedAsyncActions />
         </div>
     );
 };
